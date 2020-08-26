@@ -7,7 +7,8 @@ build_tokyocabinet() {
 }
 
 build_lua() {
-	gcc lua-tokyocabinet.c -Itokyocabinet-1.4.48 -Ltokyocabinet-1.4.48 -ltokyocabinet $1 -shared -fPIC -o cabinet.so
+	echo "gcc lua-tokyocabinet.c -Itokyocabinet-1.4.48 -Ltokyocabinet-1.4.48 -ltokyocabinet $1 $2 $3 -shared -fPIC -o cabinet.so"
+	gcc lua-tokyocabinet.c -Itokyocabinet-1.4.48 -Ltokyocabinet-1.4.48 -ltokyocabinet $1 $2 $3 -shared -fPIC -o cabinet.so
 }
 
 case $1 in
@@ -15,11 +16,19 @@ case $1 in
 		build_tokyocabinet
 		;;
 	"lua")
-		LUA_CFLAGS=-llua
+		LUA_INC_DIR=-I/usr/local/include
+		LUA_LIB_DIR=-L/usr/local/lib
+		LUA_LIB_NAME=-llua
 		if [ -n "$2" ]; then
-			LUA_CFLAGS=$2
+			LUA_INC_DIR=$2
 		fi
-		build_lua $LUA_CFLAGS
+		if [ -n "$3" ]; then
+			LUA_LIB_DIR=$3
+		fi
+		if [ -n "$4" ]; then
+			LUA_LIB_NAME=$4
+		fi
+		build_lua $LUA_INC_DIR $LUA_LIB_DIR $LUA_LIB_NAME
 		;;
 	*)
 		build_tokyocabinet

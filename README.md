@@ -13,7 +13,7 @@ please modify build.sh for Lua/LuaJIT library path.
 
 ```sh
 $ ./build.sh tokyocabinet # build tokyocabinet DBM
-$ ./build.sh lua "-L/usr/local/lib -lluajit" # build lua library
+$ ./build.sh lua -I/usr/local/include -L/usr/local/lib -lluajit # build Lua library
 ```
 
 and run test
