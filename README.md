@@ -12,7 +12,8 @@ Origin Lua binding export tokyocabinet to global ENV, I modified this, make it r
 please modify build.sh for Lua/LuaJIT library path.
 
 ```sh
-$ sh build.sh
+$ ./build.sh tokyocabinet # build tokyocabinet DBM
+$ ./build.sh lua "-L/usr/local/lib -lluajit" # build lua library
 ```
 
 and run test
