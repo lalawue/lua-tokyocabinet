@@ -352,10 +352,53 @@ static int adb_size(lua_State *lua);
 static int adb_foreach(lua_State *lua);
 static int adb_pairs(lua_State *lua);
 static int adb_next(lua_State *lua);
+static int tc_version(lua_State *lua);
+
+static const luaL_Reg tokyo_cabinet_lib[] = {
+  // util
+  {"version", tc_version},
+  {"tablenew", util_tablenew},
+  {"pack", util_pack},
+  {"unpack", util_unpack},
+  {"split", util_split},
+  {"codec", util_codec},
+  {"hash", util_hash},
+  {"bit", util_bit},
+  {"strstr", util_strstr},
+  {"regex", util_regex},
+  {"ucs", util_ucs},
+  {"dist", util_dist},
+  {"isect", util_isect},
+  {"union", util_union},
+  {"time", util_time},
+  {"sleep", util_sleep},
+  {"stat", util_stat},
+  {"glob", util_glob},
+  {"remove", util_remove},
+  {"mkdir", util_mkdir},
+  {"chdir", util_chdir},
+  // hdb
+  {"hdbnew", hdb_new},
+  // bdb
+  {"bdbnew", bdb_new},
+  // bdbcur
+  {"bdbcurnew", bdbcur_new},
+  // fdb
+  {"fdbnew", fdb_new},
+  // tdb
+  {"tdbnew", tdb_new},
+  // tdbqry
+  {"tdbqrynew", tdbqry_new},
+  // adb
+  {"adbnew", adb_new},
+  // end
+  {NULL, NULL}
+};
 
 
 /* initialization when the library is loaded */
-int luaopen_tokyocabinet(lua_State *lua){
+int luaopen_cabinet_tokyo(lua_State *lua){
+#if 0
   lua_settop(lua, 0);
   lua_newtable(lua);
   lua_setglobal(lua, "tokyocabinet");
@@ -369,6 +412,10 @@ int luaopen_tokyocabinet(lua_State *lua){
   adb_init(lua);
   lua_settop(lua, 0);
   return 0;
+#else
+  luaL_newlib(lua, tokyo_cabinet_lib);
+  return 1;
+#endif
 }
 
 
@@ -7217,6 +7264,9 @@ static int adb_next(lua_State *lua){
   return 2;
 }
 
-
+static int tc_version(lua_State *lua) {
+  lua_pushstring(lua, tcversion);
+  return 1;
+}
 
 /* END OF FILE */
