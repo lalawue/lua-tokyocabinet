@@ -1,7 +1,7 @@
 
 build_tokyocabinet() {
 	cd tokyocabinet-1.4.48
-	sh configure
+	sh configure --disable-bzip
 	make
 	cd ..
 }
